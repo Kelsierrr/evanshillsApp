@@ -1,0 +1,29 @@
+.btn {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  /* Variants */
+  .btn-default {
+    background: #003366;
+    color: white;
+  }
+  .btn-outline {
+    background: transparent;
+    color: #003366;
+    border: 1px solid #003366;
+  }
+  .btn-destructive {
+    background: #a33;
+    color: white;
+  }
+  /* Sizes */
+  .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+  .btn-md { padding: 0.5rem 1rem; font-size: 1rem; }
+  .btn-lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
+  /* Hover */
+  .btn-default:hover { background: #005599; }
+  .btn-outline:hover { background: #003366; color: white; }
+  .btn-destructive:hover { background: #c55; }
+  

@@ -1,0 +1,70 @@
+.hero {
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=800&fit=crop') center/cover no-repeat;
+    color: white;
+    padding: 4rem 1rem;
+    width: 100%;
+    min-height: 100vh;      /* full viewport height */
+    display: flex;          /* center its content… */
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-title .accent {
+    color: #ffcc00;
+  }
+  
+  .hero-sub {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+  
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .hero-btn-secondary {
+    border-color: white;
+    color: white;
+  }
+  
+  .hero-btn-secondary:hover {
+    background: white;
+    color: #003366;
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .hero {
+      padding: 6rem 1rem;
+    }
+    .hero-title {
+      font-size: 3.5rem;
+    }
+    .hero-sub {
+      font-size: 1.25rem;
+    }
+  }
+  

@@ -1,0 +1,54 @@
+.site-footer {
+    background: #003366;
+    color: white;
+    padding: 2rem 1rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-about h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-about .accent {
+    color: #ffcc00;
+  }
+  .footer-links h4,
+  .footer-services h4 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-links ul,
+  .footer-services ul {
+    list-style: none;
+    padding: 0;
+  }
+  .footer-links li,
+  .footer-services li {
+    margin-bottom: 0.5rem;
+  }
+  .footer-links a {
+    color: white;
+    text-decoration: none;
+  }
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+  .footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: #cccccc;
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  

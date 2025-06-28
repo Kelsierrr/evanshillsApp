@@ -1,0 +1,19 @@
+# Node dependencies
+/node_modules/
+/frontend/node_modules/
+/server/node_modules/
+
+# Build outputs
+/frontend/dist/
+/server/build/   # if you ever build server
+
+# Env files
+*.env
+
+# Vite cache
+frontend/.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

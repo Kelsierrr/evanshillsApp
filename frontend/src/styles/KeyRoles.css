@@ -1,0 +1,63 @@
+.keyroles {
+    padding: 4rem 1rem;
+    background: #f7f7f7;
+    text-align: center;
+  }
+  .keyroles-title {
+    font-size: 2rem;
+    color: #003366;
+    margin-bottom: 0.5rem;
+  }
+  .keyroles-sub {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  .keyroles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .keyroles-card {
+    transition: transform 0.2s;
+  }
+  .keyroles-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .keyroles-content {
+    text-align: center;
+  }
+  
+  .keyroles-icon {
+    font-size: 2rem;
+    color: #003366;
+    margin-bottom: 0.5rem;
+  }
+  
+  .keyroles-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #003366;
+  }
+  
+  .keyroles-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+  
+  .keyroles-dest {
+    font-size: 0.875rem;
+    color: #777;
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .keyroles-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
