@@ -1,0 +1,40 @@
+.jobs-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .jobs-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .job-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+  }
+  
+  .job-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .job-company {
+    font-weight: bold;
+    color: #003366;
+    margin: 0.25rem 0;
+  }
+  
+  .job-desc {
+    margin: 0.5rem 0;
+    color: #555;
+  }
+  
+  .job-date {
+    font-size: 0.875rem;
+    color: #777;
+  }
+  

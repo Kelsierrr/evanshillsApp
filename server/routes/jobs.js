@@ -30,4 +30,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+// GET /api/jobs/:id - Get a job by ID
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const job = await Job.findById(id);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    res.json(job);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;

@@ -15,7 +15,7 @@ export default function Hero() {
         </p>
         <div className="hero-ctas">
           <Button variant="default" size="lg" asChild>
-            <Link to="/job-seekers">Apply Now</Link>
+            <Link to="/jobs">Apply Now</Link>
           </Button>
           <Button variant="outline" size="lg" className="hero-btn-secondary" asChild>
             <Link to="/employers">Hire Talent</Link>

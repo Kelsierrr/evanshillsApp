@@ -1,0 +1,55 @@
+/* src/styles/About.css */
+
+.about-hero {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+  .about-hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+  .about-hero p  { font-size: 1.125rem; max-width: 600px; margin: 0 auto; }
+  
+  .about-section {
+    padding: 3rem 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .about-container img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  @media (min-width: 768px) {
+    .about-container { flex-direction: row; align-items: center; }
+    .about-container > div { flex: 1; }
+    .about-container img  { flex: 1; max-width: 400px; }
+  }
+  
+  .founder {
+    background: #f7f7f7;
+  }
+  .founder-card {
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+  .founder-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.5rem;
+  }
+  
+  .expansion-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .expansion-grid { grid-template-columns: repeat(3,1fr); }
+  }
+  

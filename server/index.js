@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+
 const app = express();
 
 //enable CORS and JSON parsing
@@ -10,6 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/jobs', require('./routes/jobs'));
+app.use('/api/jobs/:id', require('./routes/jobs'));
+app.use('/api/applications', require('./routes/applications'));
+app.use('/api/service-requests', require('./routes/serviceRequests'));
 
 
 mongoose

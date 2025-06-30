@@ -1,0 +1,50 @@
+.apply-page {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .apply-form {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .apply-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #003366;
+  }
+  
+  .apply-form input,
+  .apply-form textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .apply-form input:focus,
+  .apply-form textarea:focus {
+    outline: none;
+    border-color: #003366;
+  }
+  
+  .apply-success {
+    padding: 1rem;
+    background: #e6ffed;
+    border: 1px solid #2d8a2d;
+    color: #2d8a2d;
+    border-radius: 4px;
+  }
+  
+  .apply-error {
+    padding: 1rem;
+    background: #ffecec;
+    border: 1px solid #c0392b;
+    color: #c0392b;
+    border-radius: 4px;
+  }
+  

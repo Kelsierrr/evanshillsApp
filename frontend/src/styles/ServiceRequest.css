@@ -1,0 +1,53 @@
+.sr-page {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sr-page h1 {
+    color: #003366;
+    margin: 1rem 0;
+  }
+  
+  .sr-form {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .sr-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #003366;
+  }
+  
+  .sr-form input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .sr-form input:focus {
+    outline: none;
+    border-color: #003366;
+  }
+  
+  .sr-success {
+    background: #e6ffed;
+    border: 1px solid #2d8a2d;
+    color: #2d8a2d;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  
+  .sr-error {
+    background: #ffecec;
+    border: 1px solid #c0392b;
+    color: #c0392b;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  

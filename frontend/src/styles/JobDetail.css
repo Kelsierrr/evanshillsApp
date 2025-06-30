@@ -1,0 +1,31 @@
+.jobdetail-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .jobdetail-title {
+    font-size: 2rem;
+    color: #003366;
+  }
+  
+  .jobdetail-meta, .jobdetail-date {
+    font-size: 0.875rem;
+    color: #555;
+  }
+  
+  .jobdetail-desc h2 {
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    color: #003366;
+    margin-bottom: 0.5rem;
+  }
+  
+  .jobdetail-desc p {
+    line-height: 1.6;
+    color: #333;
+  }
+  

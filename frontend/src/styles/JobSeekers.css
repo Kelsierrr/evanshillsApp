@@ -1,0 +1,93 @@
+/* Hero */
+.js-hero {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+  .js-hero-content h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+  .js-hero-content p  { font-size: 1.125rem; margin-bottom: 2rem; }
+  
+  /* Process */
+  .js-process {
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+  .js-process-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .js-process-grid { grid-template-columns: repeat(3,1fr); }
+  }
+  .js-process-step {
+    background: #ffcc00;
+    color: #003366;
+    border-radius: 50%;
+    width: 2rem; height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Roles */
+  .js-roles {
+    background: #f7f7f7;
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+  .js-roles-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .js-roles-grid { grid-template-columns: repeat(3,1fr); }
+  }
+  .js-dests {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #555;
+  }
+  
+  /* Tiers */
+  .js-tiers {
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+  .js-tiers-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .js-tiers-grid { grid-template-columns: repeat(3,1fr); }
+  }
+  .js-tier-price {
+    font-size: 1.5rem;
+    color: #003366;
+    margin: 0.5rem 0;
+  }
+  .popular { border: 2px solid #ffcc00; }
+  .js-popular-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #ffcc00;
+    color: #003366;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    margin-top: -1rem;
+  }
+  
+  /* Apply CTA */
+  .js-apply-cta {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+  .js-apply-cta h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
