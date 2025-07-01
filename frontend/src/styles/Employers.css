@@ -24,6 +24,24 @@
     max-width: 600px;
     border-radius: 8px;
   }
+  /* success & error banners, same as Apply.css */
+.em-success{
+  padding: 1rem;
+  background: #e6ffed;
+  border: 1px solid #2d8a2d;
+  color: #2d8a2d;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.em-error {
+  padding: 1rem;
+  background: #ffecec;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
   @media (min-width: 768px) {
     .em-hero {
       flex-direction: row;

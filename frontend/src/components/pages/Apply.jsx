@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { createApplication } from '../../services/applications';
@@ -17,6 +17,15 @@ export default function Apply() {
     mutationFn: (data) => createApplication(data),
     onSuccess: () => setForm({ name:'', email:'', phone:'', coverLetter:'' })
   });
+
+  useEffect(() => {
+    if (mutation.isSuccess || mutation.isError) {
+      const timer = setTimeout(() => {
+        mutation.reset();
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [mutation.isSuccess, mutation.isError, mutation]);
 
   const handleChange = (e) => {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));

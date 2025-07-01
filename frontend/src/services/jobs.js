@@ -24,3 +24,25 @@ export async function fetchJob(id) {
         throw new Error('Failed to fetch job');
     return res.json();
 }
+
+export async function updateJob(id, data) {
+    const res = await fetch(`/api/jobs/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (!res.ok) 
+        throw new Error('Failed to update job');
+    return res.json();
+}
+
+export async function deleteJob(id) {
+    const res = await fetch(`/api/jobs/${id}`, {
+        method: 'DELETE',
+    });
+    if (!res.ok) 
+        throw new Error('Failed to delete job');
+    return res.json();
+}

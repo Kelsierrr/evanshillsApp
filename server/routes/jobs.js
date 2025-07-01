@@ -45,4 +45,46 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// PUT /api/jobs/:id - Update a job by ID
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, company, location, description } = req.body;
+
+  if (!title || !company || !location || !description) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const updatedJob = await Job.findByIdAndUpdate(
+      id,
+      { title, company, location, description },
+      { new: true }
+    );
+
+    if (!updatedJob) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    res.json(updatedJob);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// DELETE /api/jobs/:id - Delete a job by ID
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedJob = await Job.findByIdAndDelete(id);
+    if (!deletedJob) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    res.json({ message: "Job deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;

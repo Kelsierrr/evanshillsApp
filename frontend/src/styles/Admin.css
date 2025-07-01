@@ -1,0 +1,45 @@
+.admin-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .admin-section {
+    margin-top: 2rem;
+  }
+  .admin-form,
+  .admin-job-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .admin-form input,
+  .admin-form textarea,
+  .admin-job-card input,
+  .admin-job-card textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .admin-job-card {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  .admin-job-card h3 {
+    margin: 0;
+  }
+  .admin-error {
+    background: #ffecec;
+    border: 1px solid #c0392b;
+    color: #c0392b;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  

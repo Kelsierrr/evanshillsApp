@@ -14,27 +14,29 @@ app.use('/api/jobs', require('./routes/jobs'));
 app.use('/api/jobs/:id', require('./routes/jobs'));
 app.use('/api/applications', require('./routes/applications'));
 app.use('/api/service-requests', require('./routes/serviceRequests'));
+app.use('/api/employer-inquiries', require('./routes/employerInquiries'));
+app.use('/api/contact-inquiries', require('./routes/contactInquiries'));
 
 
 mongoose
-.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
-    console.log('Connected to MongoDB');
-})  
-.catch((err) => {
-    console.error('MongoDB connection error:', err);
-}
-);
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch((err) => {
+        console.error('MongoDB connection error:', err);
+    }
+    );
 
 // Health check endpoint
 app.get('/api', (req, res) => {
     res.json({ status: 'ok', message: 'API is running' });
-    });
+});
 
-    // start the server
+// start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

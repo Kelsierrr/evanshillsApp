@@ -2,9 +2,54 @@ import Header from '../Header'
 import Footer from '../Footer'
 import Button from '../ui/Button'
 import { Card, CardContent } from '../ui/Card'
+import React, { useState, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { createContactInquiry } from '../../services/contactInquiries';
 import '../../styles/Contact.css'
 
 export default function Contact() {
+    const [form, setForm] = useState({
+        firstName: '', lastName: '', email: '', phone: '',
+        subject: 'Job Application Inquiry',
+        message: '', consent: false
+      });
+      
+      const contactMut = useMutation({
+        mutationFn: (data) => createContactInquiry(data),
+        onSuccess: () => {
+          setForm({ firstName:'', lastName:'', email:'', phone:'',
+                    subject:'Job Application Inquiry', message:'', consent:false });
+        }
+      });
+
+      useEffect(() => {
+        if (contactMut.isSuccess || contactMut.isError) {
+          const timer = setTimeout(() => {
+            contactMut.reset();
+          }, 3000);
+          return () => clearTimeout(timer);
+        }
+      }, [contactMut.isSuccess, contactMut.isError, contactMut]);
+      
+      const handleChange = (e) => {
+        const { name, type, checked, value } = e.target;
+        setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
+      };
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        contactMut.mutate({
+          firstName: form.firstName,
+          lastName:  form.lastName,
+          email:     form.email,
+          phone:     form.phone,
+          subject:   form.subject,
+          message:   form.message,
+          consent:   form.consent,
+        });
+      };
+      
+
   return (
     <>
       <Header />
@@ -63,32 +108,39 @@ export default function Contact() {
       {/* Contact Form */}
       <section className="contact-form-section">
         <h2>Send Us a Message</h2>
+        {contactMut.isSuccess && (
+  <div className="cf-success">✅ Your message has been sent!</div>
+)}
+{contactMut.isError && (
+  <div className="cf-error">{contactMut.error.message}</div>
+)}
+
         <Card>
           <CardContent>
-            <form className="contact-form">
+          <form className="contact-form" onSubmit={handleSubmit}>
               <div className="cf-row">
                 <label>
                   First Name
-                  <input type="text" name="firstName" required />
+                  <input name="firstName" value={form.firstName} onChange={handleChange} required />
                 </label>
                 <label>
                   Last Name
-                  <input type="text" name="lastName" required />
+                  <input name="lastName"  value={form.lastName}  onChange={handleChange} required />
                 </label>
               </div>
               <div className="cf-row">
                 <label>
                   Email Address
-                  <input type="email" name="email" required />
+                  <input name="email"     value={form.email}     onChange={handleChange} required />
                 </label>
                 <label>
                   Phone Number
-                  <input type="tel" name="phone" required />
+                  <input name="phone"     value={form.phone}     onChange={handleChange} required />
                 </label>
               </div>
               <label>
                 Subject
-                <select name="subject">
+                <select name="subject"  value={form.subject}  onChange={handleChange}>
                   <option>Job Application Inquiry</option>
                   <option>Employer Services</option>
                   <option>Visa Support Questions</option>
@@ -98,13 +150,13 @@ export default function Contact() {
               </label>
               <label>
                 Message
-                <textarea name="message" rows="5" placeholder="Please provide details about your inquiry..." required />
+                <textarea name="message" rows="5" value={form.message} onChange={handleChange} required />
               </label>
               <label className="cf-consent">
-                <input type="checkbox" name="consent" required />
+                <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
                 I consent to being contacted by EvansHills Recruitment regarding my inquiry.
               </label>
-              <Button type="submit" variant="default" size="md">Send Message</Button>
+              <Button type="submit" variant="default" size="md" disabled={contactMut.isLoading}>{contactMut.isLoading ? 'Sending…' : 'Send Message'}</Button>
             </form>
           </CardContent>
         </Card>

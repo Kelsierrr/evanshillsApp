@@ -17,6 +17,25 @@
     gap: 1rem;
     padding: 2rem 1rem;
   }
+
+  /* success & error banners, same as Apply.css */
+.cf-success {
+  padding: 1rem;
+  background: #e6ffed;
+  border: 1px solid #2d8a2d;
+  color: #2d8a2d;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.cf-error {
+  padding: 1rem;
+  background: #ffecec;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
   @media (min-width: 768px) {
     .contact-info {
       grid-template-columns: repeat(2,1fr);

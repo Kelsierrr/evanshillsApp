@@ -3,6 +3,9 @@ import Footer from '../Footer';
 import Button from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { Users, Award, Clock, Globe, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { createEmployerInquiry } from '../../services/employerInquiries';
 import '../../styles/Employers.css';
 
 export default function Employers() {
@@ -38,6 +41,46 @@ export default function Employers() {
     'Reference verification',
     'Interview preparation and coaching'
   ];
+
+  const [form, setForm] = useState({
+    company: '', contact: '', email: '', phone: '',
+    industry: '', positions: '', details: ''
+  });
+  
+  const inquiryMut = useMutation({
+    mutationFn: (data) => createEmployerInquiry(data),
+    onSuccess: () => {
+      setForm({ company:'', contact:'', email:'', phone:'',
+                industry:'', positions:'', details:'' });
+    }
+  });
+
+  useEffect(() => {
+    if (inquiryMut.isSuccess || inquiryMut.isError) {
+      const timer = setTimeout(() => {
+        inquiryMut.reset();
+      }, 3000); // hide after 3s
+      return () => clearTimeout(timer);
+    }
+  }, [inquiryMut.isSuccess, inquiryMut.isError, inquiryMut]);
+  
+  const handleChange = (e) => {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    inquiryMut.mutate({
+      companyName:   form.company,
+      contactPerson: form.contact,
+      email:         form.email,
+      phone:         form.phone,
+      industry:      form.industry,
+      positions:     Number(form.positions),
+      details:       form.details,
+    });
+  };
+  
 
   return (
     <>
@@ -107,33 +150,39 @@ export default function Employers() {
       {/* Inquiry Form */}
       <section id="inquiry" className="em-inquiry">
         <h2>Request Talent</h2>
+        {inquiryMut.isSuccess && (
+    <div className="em-success">✅ Your request has been submitted!</div>
+  )}
+  {inquiryMut.isError && (
+    <div className="em-error">{inquiryMut.error.message}</div>
+  )}
         <Card>
           <CardContent>
-            <form className="em-form">
+            <form className="em-form" onSubmit={handleSubmit}>
               <div className="em-form-row">
                 <label>
                   Company Name
-                  <input type="text" name="company" required />
+                  <input name="company"   value={form.company}   onChange={handleChange} required />
                 </label>
                 <label>
                   Contact Person
-                  <input type="text" name="contact" required />
+                  <input name="contact"   value={form.contact}   onChange={handleChange} required />
                 </label>
               </div>
               <div className="em-form-row">
                 <label>
                   Email Address
-                  <input type="email" name="email" required />
+                  <input name="email"     value={form.email}     onChange={handleChange} required />
                 </label>
                 <label>
                   Phone Number
-                  <input type="tel" name="phone" required />
+                  <input name="phone"     value={form.phone}     onChange={handleChange} required />
                 </label>
               </div>
               <div className="em-form-row">
                 <label>
                   Industry
-                  <select name="industry">
+                  <select name="industry" value={form.industry}  onChange={handleChange}>
                     <option>Healthcare</option>
                     <option>Logistics</option>
                     <option>Domestic Support</option>
@@ -142,15 +191,15 @@ export default function Employers() {
                 </label>
                 <label>
                   Number of Positions
-                  <input type="number" name="positions" required />
+                  <input name="positions" type="number" value={form.positions} onChange={handleChange} required />
                 </label>
               </div>
               <label>
                 Job Requirements & Details
-                <textarea name="details" rows="4" required />
+                <textarea name="details" rows="4" value={form.details} onChange={handleChange} required />
               </label>
-              <Button type="submit" variant="default" size="md">
-                Submit Request
+              <Button type="submit" variant="default" size="md" disabled={inquiryMut.isLoading}>
+              {inquiryMut.isLoading ? 'Submitting…' : 'Submit Request'}
               </Button>
             </form>
           </CardContent>
