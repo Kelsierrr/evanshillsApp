@@ -10,6 +10,7 @@ export async function createJob(data) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(data),
     });
@@ -30,6 +31,7 @@ export async function updateJob(id, data) {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(data),
     });
@@ -41,6 +43,9 @@ export async function updateJob(id, data) {
 export async function deleteJob(id) {
     const res = await fetch(`/api/jobs/${id}`, {
         method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
     });
     if (!res.ok) 
         throw new Error('Failed to delete job');

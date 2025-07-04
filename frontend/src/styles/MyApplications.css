@@ -1,0 +1,47 @@
+.ma-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .ma-page h1 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+  .ma-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+  .ma-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+  }
+  .ma-card h2 {
+    margin: 0;
+    color: #003366;
+  }
+  .ma-meta {
+    font-size: 0.875rem;
+    color: #555;
+  }
+  .ma-date {
+    font-size: 0.875rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+  }
+  .ma-resume {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #0066cc;
+    text-decoration: underline;
+  }
+  .ma-loading,
+  .ma-error {
+    text-align: center;
+    color: #777;
+    margin-top: 2rem;
+  }
+  

@@ -1,40 +1,51 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { createApplication } from '../../services/applications';
-import Header from '../Header';
-import Footer from '../Footer';
-import Button from '../ui/Button';
-import '../../styles/Apply.css';
+import React, { useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { createApplication } from '../../services/applications'
+import Header from '../Header'
+import Footer from '../Footer'
+import Button from '../ui/Button'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { applicationSchema } from '../../schemas/applicationSchema'
+import '../../styles/Apply.css'
 
 export default function Apply() {
-  const { id: jobId } = useParams();
-  const [form, setForm] = useState({
-    name: '', email: '', phone: '', coverLetter: ''
-  });
-
+  const { id: jobId } = useParams()
   const mutation = useMutation({
-    mutationFn: (data) => createApplication(data),
-    onSuccess: () => setForm({ name:'', email:'', phone:'', coverLetter:'' })
-  });
+    mutationFn: (data) => createApplication(data)
+  })
 
   useEffect(() => {
     if (mutation.isSuccess || mutation.isError) {
       const timer = setTimeout(() => {
-        mutation.reset();
-      }, 3000);
-      return () => clearTimeout(timer);
+        mutation.reset()
+      }, 3000)
+      return () => clearTimeout(timer)
     }
-  }, [mutation.isSuccess, mutation.isError, mutation]);
+  }, [mutation.isSuccess, mutation.isError, mutation])
 
-  const handleChange = (e) => {
-    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting }
+  } = useForm({
+    resolver: zodResolver(applicationSchema),
+    mode: 'onChange'
+  })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    mutation.mutate({ jobId, ...form });
-  };
+  const onSubmit = (data) => {
+    const fd = new FormData()
+    fd.append('jobId', jobId)
+    fd.append('name', data.name)
+    fd.append('email', data.email)
+    fd.append('phone', data.phone)
+    fd.append('coverLetter', data.coverLetter)
+    if (data.resume && data.resume.length > 0) {
+      fd.append('resume', data.resume[0])
+    }
+    mutation.mutate(fd)
+  }
 
   return (
     <>
@@ -53,52 +64,52 @@ export default function Apply() {
           <div className="apply-error">{mutation.error.message}</div>
         )}
 
-        <form className="apply-form" onSubmit={handleSubmit}>
+        <form className="apply-form" onSubmit={handleSubmit(onSubmit)}>
           <label>
             Name
-            <input
-              name="name" value={form.name}
-              onChange={handleChange} required
-            />
+            <input {...register('name')} />
+            {errors.name && <p className="form-error">{errors.name.message}</p>}
           </label>
 
           <label>
             Email
-            <input
-              name="email" type="email"
-              value={form.email} onChange={handleChange} required
-            />
+            <input type="email" {...register('email')} />
+            {errors.email && <p className="form-error">{errors.email.message}</p>}
           </label>
 
           <label>
             Phone
-            <input
-              name="phone" type="tel"
-              value={form.phone} onChange={handleChange} required
-            />
+            <input type="tel" {...register('phone')} />
+            {errors.phone && <p className="form-error">{errors.phone.message}</p>}
           </label>
 
           <label>
             Cover Letter
-            <textarea
-              name="coverLetter" rows="6"
-              value={form.coverLetter}
-              onChange={handleChange}
-              required
+            <textarea rows={6} {...register('coverLetter')} />
+            {errors.coverLetter && <p className="form-error">{errors.coverLetter.message}</p>}
+          </label>
+
+          <label>
+            Upload Resume (PDF or DOCX)
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              {...register('resume')}
             />
+            {errors.resume && <p className="form-error">{errors.resume.message}</p>}
           </label>
 
           <Button
             type="submit"
             variant="default"
             size="md"
-            disabled={mutation.isLoading}
+            disabled={!isValid || isSubmitting}
           >
-            {mutation.isLoading ? 'Submitting…' : 'Submit Application'}
+            {isSubmitting ? 'Submitting…' : 'Submit Application'}
           </Button>
         </form>
       </main>
       <Footer />
     </>
-  );
+  )
 }

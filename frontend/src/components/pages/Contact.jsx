@@ -5,49 +5,36 @@ import { Card, CardContent } from '../ui/Card'
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { createContactInquiry } from '../../services/contactInquiries';
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { contactInquirySchema } from '../../schemas/contactInquirySchema';
 import '../../styles/Contact.css'
 
 export default function Contact() {
-    const [form, setForm] = useState({
-        firstName: '', lastName: '', email: '', phone: '',
-        subject: 'Job Application Inquiry',
-        message: '', consent: false
-      });
-      
-      const contactMut = useMutation({
-        mutationFn: (data) => createContactInquiry(data),
-        onSuccess: () => {
-          setForm({ firstName:'', lastName:'', email:'', phone:'',
-                    subject:'Job Application Inquiry', message:'', consent:false });
-        }
-      });
+  const contactMut = useMutation({
+    mutationFn: data => createContactInquiry(data)
+  });
 
-      useEffect(() => {
-        if (contactMut.isSuccess || contactMut.isError) {
-          const timer = setTimeout(() => {
-            contactMut.reset();
-          }, 3000);
-          return () => clearTimeout(timer);
-        }
-      }, [contactMut.isSuccess, contactMut.isError, contactMut]);
-      
-      const handleChange = (e) => {
-        const { name, type, checked, value } = e.target;
-        setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
-      };
-      
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        contactMut.mutate({
-          firstName: form.firstName,
-          lastName:  form.lastName,
-          email:     form.email,
-          phone:     form.phone,
-          subject:   form.subject,
-          message:   form.message,
-          consent:   form.consent,
-        });
-      };
+  // auto-dismiss banners
+  useEffect(() => {
+    if (contactMut.isSuccess || contactMut.isError) {
+      const t = setTimeout(() => contactMut.reset(), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [contactMut]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting }
+  } = useForm({
+    resolver: zodResolver(contactInquirySchema),
+    mode: 'onChange'
+  });
+
+  const onSubmit = data => {
+    contactMut.mutate(data);
+  };
       
 
   return (
@@ -108,82 +95,92 @@ export default function Contact() {
       {/* Contact Form */}
       <section className="contact-form-section">
         <h2>Send Us a Message</h2>
+
         {contactMut.isSuccess && (
-  <div className="cf-success">✅ Your message has been sent!</div>
-)}
-{contactMut.isError && (
-  <div className="cf-error">{contactMut.error.message}</div>
-)}
+          <div className="cf-success">✅ Your message has been sent!</div>
+        )}
+        {contactMut.isError && (
+          <div className="cf-error">{contactMut.error.message}</div>
+        )}
 
         <Card>
           <CardContent>
-          <form className="contact-form" onSubmit={handleSubmit}>
+            <form className="contact-form" onSubmit={handleSubmit(onSubmit)}>
               <div className="cf-row">
                 <label>
                   First Name
-                  <input name="firstName" value={form.firstName} onChange={handleChange} required />
+                  <input {...register('firstName')} />
+                  {errors.firstName && (
+                    <p className="form-error">{errors.firstName.message}</p>
+                  )}
                 </label>
                 <label>
                   Last Name
-                  <input name="lastName"  value={form.lastName}  onChange={handleChange} required />
+                  <input {...register('lastName')} />
+                  {errors.lastName && (
+                    <p className="form-error">{errors.lastName.message}</p>
+                  )}
                 </label>
               </div>
+
               <div className="cf-row">
                 <label>
                   Email Address
-                  <input name="email"     value={form.email}     onChange={handleChange} required />
+                  <input type="email" {...register('email')} />
+                  {errors.email && (
+                    <p className="form-error">{errors.email.message}</p>
+                  )}
                 </label>
                 <label>
                   Phone Number
-                  <input name="phone"     value={form.phone}     onChange={handleChange} required />
+                  <input type="tel" {...register('phone')} />
+                  {errors.phone && (
+                    <p className="form-error">{errors.phone.message}</p>
+                  )}
                 </label>
               </div>
+
               <label>
                 Subject
-                <select name="subject"  value={form.subject}  onChange={handleChange}>
-                  <option>Job Application Inquiry</option>
-                  <option>Employer Services</option>
-                  <option>Visa Support Questions</option>
-                  <option>General Inquiry</option>
-                  <option>Complaint or Feedback</option>
+                <select {...register('subject')}>
+                  <option value="Job Application Inquiry">Job Application Inquiry</option>
+                  <option value="Employer Services">Employer Services</option>
+                  <option value="Visa Support Questions">Visa Support Questions</option>
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Complaint or Feedback">Complaint or Feedback</option>
                 </select>
+                {errors.subject && (
+                  <p className="form-error">{errors.subject.message}</p>
+                )}
               </label>
+
               <label>
                 Message
-                <textarea name="message" rows="5" value={form.message} onChange={handleChange} required />
+                <textarea rows={5} {...register('message')}></textarea>
+                {errors.message && (
+                  <p className="form-error">{errors.message.message}</p>
+                )}
               </label>
+
               <label className="cf-consent">
-                <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
+                <input type="checkbox" {...register('consent')} />
                 I consent to being contacted by EvansHills Recruitment regarding my inquiry.
               </label>
-              <Button type="submit" variant="default" size="md" disabled={contactMut.isLoading}>{contactMut.isLoading ? 'Sending…' : 'Send Message'}</Button>
+              {errors.consent && (
+                <p className="form-error">{errors.consent.message}</p>
+              )}
+
+              <Button
+                type="submit"
+                variant="default"
+                size="md"
+                disabled={!isValid || isSubmitting}
+              >
+                {isSubmitting ? 'Sending…' : 'Send Message'}
+              </Button>
             </form>
           </CardContent>
         </Card>
-      </section>
-
-      {/* Map Placeholder */}
-      <section className="contact-map">
-        <div className="map-placeholder">
-          <p>Interactive map will be embedded here</p>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="contact-faq">
-        <h2>Frequently Asked Questions</h2>
-        <details>
-          <summary>How long does the recruitment process take?</summary>
-          <p>The complete process typically takes 6–12 months, depending on the destination country, visa requirements, and job availability.</p>
-        </details>
-        <details>
-          <summary>What industries do you specialize in?</summary>
-          <p>We focus on healthcare, logistics, and domestic support roles across various international markets.</p>
-        </details>
-        <details>
-          <summary>Do you assist with visa applications?</summary>
-          <p>Yes, we provide end-to-end support for visa processing and related documentation.</p>
-        </details>
       </section>
 
       <Footer />

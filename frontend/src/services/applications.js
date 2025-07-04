@@ -1,9 +1,12 @@
 // src/services/applications.js
-export async function createApplication(data) {
+export async function createApplication(formData) {
+  const token = localStorage.getItem('token');
     const res = await fetch('/api/applications', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+       headers: {
+        'Authorization': `Bearer ${token}`
+       },
+      body: formData,  // Use FormData for multipart/form-data
     });
     if (!res.ok) {
       const err = await res.json();
@@ -12,3 +15,14 @@ export async function createApplication(data) {
     return res.json();
   }
   
+  export async function fetchMyApplications() {
+    const res = await fetch('/api/applications', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    if (!res.ok) {
+      throw new Error('Failed to fetch applications');
+    }
+    return res.json();
+  }

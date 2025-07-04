@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Job = require("../models/Job");
+const auth = require('../middleware/auth');
 
 // GET /api/jobs - Get all jobs
 
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
 );
 
 // POST /api/jobs - Create a new job
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { title, company, location, description } = req.body;
 
   if (!title || !company || !location || !description) {
@@ -47,7 +48,7 @@ router.get("/:id", async (req, res) => {
 
 // PUT /api/jobs/:id - Update a job by ID
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { id } = req.params;
   const { title, company, location, description } = req.body;
 
@@ -73,7 +74,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE /api/jobs/:id - Delete a job by ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const { id } = req.params;
 
   try {

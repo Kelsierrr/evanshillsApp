@@ -19,7 +19,7 @@ export default function AdminJobs() {
   // Redirect if not logged in
   useEffect(() => {
     if (localStorage.getItem('isAdmin') !== 'true') {
-      navigate('/admin/login', { replace: true });
+      navigate('/admin', { replace: true });
     }
   }, [navigate]);
 

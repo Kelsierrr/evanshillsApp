@@ -158,6 +158,12 @@
     display: grid;
     gap: 1rem;
   }
+
+  .form-error { 
+    color: #c0392b; 
+    font-size:0.875rem;
+     margin-top:0.25rem
+     }
   @media (min-width: 768px) {
     .em-form-row {
       grid-template-columns: repeat(2,1fr);
