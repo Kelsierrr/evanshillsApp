@@ -11,7 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
-
+.babelrc
+jest.config.cjs
+jest.setupPolyfills.cjs
+setupTests.cjs
+__tests__
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

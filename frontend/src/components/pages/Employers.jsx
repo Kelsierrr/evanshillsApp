@@ -3,12 +3,8 @@ import Footer from '../Footer';
 import Button from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { Users, Award, Clock, Globe, CheckCircle } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { createEmployerInquiry } from '../../services/employerInquiries';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { employerInquirySchema } from '../../schemas/employerInquirySchema';
+import React from 'react';
+import EmployerInquiryForm from '../EmployerInquiryForm';
 import '../../styles/Employers.css';
 
 export default function Employers() {
@@ -44,39 +40,7 @@ export default function Employers() {
     'Reference verification',
     'Interview preparation and coaching'
   ];
-
-  const inquiryMut = useMutation({ mutationFn: data => createEmployerInquiry(data) });
-
-  // Auto-dismiss banners
-  useEffect(() => {
-    if (inquiryMut.isSuccess || inquiryMut.isError) {
-      const t = setTimeout(() => inquiryMut.reset(), 3000);
-      return () => clearTimeout(t);
-    }
-  }, [inquiryMut]);
   
-  // RHF + Zod
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid, isSubmitting }
-  } = useForm({
-    resolver: zodResolver(employerInquirySchema),
-    mode: 'onChange'
-  });
-  
-  const onSubmit = data => inquiryMut.mutate({
-    companyName:   data.companyName,
-    contactPerson: data.contactPerson,
-    email:         data.email,
-    phone:         data.phone,
-    industry:      data.industry,
-    positions:     Number(data.positions),
-    details:       data.details,
-  });
-  
-  
-
   return (
     <>
       <Header />
@@ -145,60 +109,7 @@ export default function Employers() {
       {/* Inquiry Form */}
       <section id="inquiry" className="em-inquiry">
   <h2>Request Talent</h2>
-
-  {inquiryMut.isSuccess && <div className="em-success">✅ Your request has been submitted!</div>}
-  {inquiryMut.isError   && <div className="em-error">{inquiryMut.error.message}</div>}
-
-  <Card>
-    <CardContent>
-      <form className="em-form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="em-form-row">
-          <label>
-            Company Name
-            <input {...register('companyName')} />
-            {errors.companyName && <p className="form-error">{errors.companyName.message}</p>}
-          </label>
-          <label>
-            Contact Person
-            <input {...register('contactPerson')} />
-            {errors.contactPerson && <p className="form-error">{errors.contactPerson.message}</p>}
-          </label>
-        </div>
-        <div className="em-form-row">
-          <label>
-            Email
-            <input type="email" {...register('email')} />
-            {errors.email && <p className="form-error">{errors.email.message}</p>}
-          </label>
-          <label>
-            Phone
-            <input type="tel" {...register('phone')} />
-            {errors.phone && <p className="form-error">{errors.phone.message}</p>}
-          </label>
-        </div>
-        <div className="em-form-row">
-          <label>
-            Industry
-            <input {...register('industry')} />
-            {errors.industry && <p className="form-error">{errors.industry.message}</p>}
-          </label>
-          <label>
-            Number of Positions
-            <input type="number" {...register('positions', { valueAsNumber: true })} />
-            {errors.positions && <p className="form-error">{errors.positions.message}</p>}
-          </label>
-        </div>
-        <label>
-          Job Requirements & Details
-          <textarea rows={4} {...register('details')} />
-          {errors.details && <p className="form-error">{errors.details.message}</p>}
-        </label>
-        <Button type="submit" disabled={!isValid || isSubmitting}>
-          {isSubmitting ? 'Submitting…' : 'Submit Request'}
-        </Button>
-      </form>
-    </CardContent>
-  </Card>
+  <EmployerInquiryForm />
 </section>
       <Footer />
     </>
