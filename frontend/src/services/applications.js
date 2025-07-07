@@ -1,7 +1,8 @@
 // src/services/applications.js
+const API = import.meta.env.VITE_API_URL;
 export async function createApplication(formData) {
   const token = localStorage.getItem('token');
-    const res = await fetch('/api/applications', {
+    const res = await fetch(`${API}applications`, {
       method: 'POST',
        headers: {
         'Authorization': `Bearer ${token}`
@@ -16,7 +17,7 @@ export async function createApplication(formData) {
   }
   
   export async function fetchMyApplications() {
-    const res = await fetch('/api/applications', {
+    const res = await fetch(`${API}/applications`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }

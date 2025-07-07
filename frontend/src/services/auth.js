@@ -1,6 +1,7 @@
 // login & register calls, returns JSON with { token }
+const API = import.meta.env.VITE_API_URL
 export async function registerUser({ email, password }) {
-    const res = await fetch('/api/users/register', {
+    const res = await fetch(`${API}/users/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -13,7 +14,7 @@ export async function registerUser({ email, password }) {
   }
   
   export async function loginUser({ email, password }) {
-    const res = await fetch('/api/users/login', {
+    const res = await fetch(`${API}/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

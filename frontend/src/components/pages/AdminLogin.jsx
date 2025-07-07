@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate }                  from 'react-router-dom';
 import Button                           from '../ui/Button';
 import '../../styles/Admin.css';
-
+const API = import.meta.env.VITE_API_URL
 export default function AdminLogin() {
   const [pw, setPw]       = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
 
   // If a valid token is already stored, go straight to /admin/jobs
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function AdminLogin() {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API}/auth/login`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ password: pw })
