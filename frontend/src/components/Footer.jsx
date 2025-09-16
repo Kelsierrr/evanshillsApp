@@ -18,6 +18,7 @@ export default function Footer() {
             <li><Link to="/job-seekers">Job Seekers</Link></li>
             <li><Link to="/employers">Employers</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/admin">Admin</Link></li>
           </ul>
         </div>
 
