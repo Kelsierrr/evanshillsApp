@@ -6,7 +6,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // set this in your .
 const JWT_SECRET = process.env.JWT_SECRET; // also set in .env
 const EXPIRES_IN = "2h";
 
-router.post("/login", (req, res) => {
+router.post("/admin", (req, res) => {
   const { password } = req.body;
   if (password !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: "Invalid credentials" });

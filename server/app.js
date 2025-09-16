@@ -2,8 +2,9 @@
 const express  = require('express');
 const cors     = require('cors');
 const path     = require('path');
-require('dotenv').config();
 const mongoose = require('mongoose');
+require('dotenv').config();
+
 
 // Routers
 const authRouter           = require('./routes/auth');
@@ -31,6 +32,6 @@ app.use('/api/employer-inquiries', employerInqRouter);
 app.use('/api/contact-inquiries', contactInqRouter);
 
 // Health check
-app.get('/api', (_req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 
 module.exports = app;
