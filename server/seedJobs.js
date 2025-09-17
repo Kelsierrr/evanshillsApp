@@ -1,5 +1,5 @@
 // server/seedJobs.js
-const Job = require('./models/Job');
+const Job = require('./models/Job'); // <-- path is from server/ root
 
 const SAMPLE_JOBS = [
   {
@@ -43,3 +43,16 @@ const SAMPLE_JOBS = [
     description: "General housekeeping, laundry, and light meal prep..."
   }
 ];
+
+async function seedJobs() {
+  const count = await Job.countDocuments();
+  if (count === 0) {
+    const created = await Job.insertMany(SAMPLE_JOBS);
+    console.log(`Seeded ${created.length} jobs ✅`);
+  } else {
+    console.log(`Jobs already exist (${count}), skipping seed.`);
+  }
+}
+
+module.exports = { seedJobs }; // <-- named export
+// Usage: call seedJobs() after DB connection in server/index.js
